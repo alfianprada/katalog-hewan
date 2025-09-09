@@ -3,8 +3,15 @@ import '../models/pet.dart';
 
 class DetailPage extends StatelessWidget {
   final Pet pet;
+  final bool isFavorite;
+  final VoidCallback onFavoriteToggle;
 
-  const DetailPage({Key? key, required this.pet}) : super(key: key);
+  const DetailPage({
+    Key? key,
+    required this.pet,
+    required this.isFavorite,
+    required this.onFavoriteToggle,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +19,22 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(pet.name),
         backgroundColor: Colors.teal,
+        actions: [
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (child, animation) {
+              return ScaleTransition(scale: animation, child: child);
+            },
+            child: IconButton(
+              key: ValueKey(isFavorite),
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: Colors.red,
+              ),
+              onPressed: onFavoriteToggle,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -19,14 +42,15 @@ class DetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  width: double.infinity,
-                  color: Colors.grey[200],
+              Hero(
+                tag: pet.name,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
-                  pet.image,
-                  fit: BoxFit.contain,
+                    pet.image,
+                    width: double.infinity,
+                    height: 250,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
