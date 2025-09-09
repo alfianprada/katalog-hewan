@@ -4,7 +4,6 @@ class Pet {
   final String image;
   final String characteristic;
   final String careTips;
-  bool isFavorite;
 
   Pet({
     required this.name,
@@ -12,6 +11,5 @@ class Pet {
     required this.image,
     required this.characteristic,
     required this.careTips,
-    this.isFavorite = false,
   });
 }

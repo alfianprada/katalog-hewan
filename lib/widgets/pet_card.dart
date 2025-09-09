@@ -9,28 +9,68 @@ class PetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(8),
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.network(
-            pet.image,
-            width: 100,
-            height: 30,
-            fit: BoxFit.cover,
-          ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
         ),
-        title: Text(
-          pet.name,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        child: Row(
+          children: [
+            // Gambar full & proporsional
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                bottomLeft: Radius.circular(16),
+              ),
+              child: Image.asset(
+                pet.image,
+                width: 120,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      pet.name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      pet.type,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: const [
+                        Icon(Icons.pets, size: 16, color: Colors.teal),
+                        SizedBox(width: 4),
+                        Text("Lihat Detail"),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(right: 12),
+              child: Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+            ),
+          ],
         ),
-        subtitle: Text(pet.type),
-        trailing: const Icon(Icons.arrow_forward_ios),
-        onTap: onTap,
       ),
     );
   }
